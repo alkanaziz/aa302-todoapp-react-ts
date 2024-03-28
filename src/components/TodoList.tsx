@@ -44,7 +44,7 @@ const TodoList = () => {
   return (
     <div>
       <div>
-        <TodoForm />
+        <TodoForm setTodos={setTodos} />
       </div>
 
       <ul>
