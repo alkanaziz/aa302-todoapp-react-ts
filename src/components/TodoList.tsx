@@ -38,7 +38,7 @@ const TodoList = () => {
 
   const handleDelete = (id: string) => {
     TodoOperations.deleteTodo(id)
-    setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== id))
+    setTodos(TodoOperations.getTodos())
   }
 
   return (
