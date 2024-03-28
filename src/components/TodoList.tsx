@@ -1,7 +1,10 @@
 import { useState } from 'react'
 import { TodoTypes } from '../interfaces'
 import { TodoOperations } from '../utils'
-import TodoForm from './TodoForm'
+import { TodoForm } from '.'
+import { FaCheck, FaEdit } from 'react-icons/fa'
+import { GiCancel } from 'react-icons/gi'
+import { RiDeleteBin5Fill } from 'react-icons/ri'
 
 const TodoList = () => {
   const [todos, setTodos] = useState<TodoTypes[]>(TodoOperations.getTodos())
@@ -19,7 +22,7 @@ const TodoList = () => {
   }
 
   const handleEditSave = (id: string) => {
-    if (!editedTodoText.trim()) {
+    if (editedTodoText.trim() !== '') {
       const updatedTodo = TodoOperations.updateTodo({
         id,
         text: editedTodoText,
@@ -46,9 +49,47 @@ const TodoList = () => {
 
       <ul>
         {todos.length === 0 ? (
-            <h1>No added todos, yet!</h1>
+          <h2>No added todos, yet!</h2>
         ) : (
-            <div>Todo</div>
+          todos.map((todo) => (
+            <div key={todo.id}>
+              {editTodoID === todo.id ? (
+                <div>
+                  <input
+                    type="text"
+                    value={editedTodoText}
+                    onChange={(e) => setEditedTodoText(e.target.value)}
+                    autoFocus={true}
+                  />
+                  <div>
+                    <button onClick={() => handleEditSave(todo.id)}>
+                      <FaCheck />
+                    </button>
+                    <button>
+                      <GiCancel onClick={() => handleEditCancel()} />
+                    </button>
+                    <button>
+                      <RiDeleteBin5Fill onClick={() => handleDelete(todo.id)} />
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <div>
+                  <p>{todo.text}</p>
+                  <div>
+                    <button>
+                      <FaEdit
+                        onClick={() => handleEditStart(todo.id, todo.text)}
+                      />
+                    </button>
+                    <button>
+                      <RiDeleteBin5Fill onClick={() => handleDelete(todo.id)} />
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
+          ))
         )}
       </ul>
     </div>

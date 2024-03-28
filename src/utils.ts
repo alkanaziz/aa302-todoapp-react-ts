@@ -6,7 +6,23 @@ const LOCAL_STORAGE_KEY = 'todos'
 export const TodoOperations = {
   getTodos: (): TodoTypes[] => {
     const todos = localStorage.getItem(LOCAL_STORAGE_KEY)
-    return todos ? JSON.parse(todos) : []
+    return todos ? JSON.parse(todos) : [
+        {
+            id: nanoid(),
+            text: 'Learn React',
+            completed: false,
+        },
+        {
+            id: nanoid(),
+            text: 'Learn TypeScript',
+            completed: false,
+        },
+        {
+            id: nanoid(),
+            text: 'Learn Redux',
+            completed: false,
+        },
+    ]
   },
 
   addTodo: (text: string): TodoTypes[] => {
